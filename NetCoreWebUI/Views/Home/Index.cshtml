@@ -1,0 +1,26 @@
+﻿@model List<TmsCommonDataService.CustomsPortServiceModel>;
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    if (Model != null && Model.Any())
+    {
+        <table>
+            @{foreach (TmsCommonDataService.CustomsPortServiceModel m in Model)
+                {
+
+            <tr>
+                <td>@m.CustomsPortID</td>
+                <td>@m.PortName</td>
+                <td>@m.PortNO</td>
+            </tr>
+
+
+                }
+            }
+        </table>
+
+    }
+}
