@@ -4,6 +4,8 @@
     ViewData["Title"] = "Home Page";
 }
 
+
+
 @{
     if (Model != null && Model.Any())
     {
@@ -21,6 +23,25 @@
                 }
             }
         </table>
-
+        <span id="apiPostResult"></span>
     }
+}
+
+@section Scripts{ 
+    <script>
+        $(function () {
+
+            var name = "test";
+
+            $.ajax({
+                url: "http://apitest.shangpin.com/api/values/PostApiTest",
+                type: 'post',
+                contentType: 'application/json',
+                data: JSON.stringify({Name: '4'}),
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+    </script>
 }

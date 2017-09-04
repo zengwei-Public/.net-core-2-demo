@@ -63,6 +63,11 @@ namespace NetCoreWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            #region 跨域
+            services.AddCors(options => options.AddPolicy("AllowSameDomain",
+        p => p.WithOrigins("http://localhost:33716", "http://c.example.com").AllowAnyMethod().AllowAnyHeader()));
+            #endregion
+
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.Replace(ServiceDescriptor.Transient<IControllerActivator, ServiceBasedControllerActivator>());
@@ -81,6 +86,7 @@ namespace NetCoreWebApi
             }
 
             app.UseMvc();
+            app.UseCors("AllowSameDomain");
         }
     }
 }

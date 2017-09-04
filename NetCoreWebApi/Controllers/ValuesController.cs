@@ -4,10 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NetCoreIBLL;
+using NetCoreModel;
+using Microsoft.AspNetCore.Cors;
 
 namespace NetCoreWebApi.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowSameDomain")]
     public class ValuesController : Controller
     {
         private readonly ITestBLL _testBLL;
@@ -20,6 +23,14 @@ namespace NetCoreWebApi.Controllers
         public string GetApiTest()
         {
             return _testBLL.TestMethod();
+        }
+
+        [HttpPost("PostApiTest")]
+        public IActionResult PostApiTest([FromBody] TestModel model)
+        {
+            if(model==null || string.IsNullOrWhiteSpace(model.Name))
+                return Json(new ResultApiModel (){ IsSuccess = false, Message = "失败 model is null or model.Name is empty" });
+            return Json(new ResultApiModel() { IsSuccess = true, Message = "成功" + model.Name });
         }
 
         // GET api/values
