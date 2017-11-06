@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using System.Reflection;
 using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
 
 namespace NetCoreWebApi
 {
@@ -73,7 +74,7 @@ namespace NetCoreWebApi
             services.Replace(ServiceDescriptor.Transient<IControllerActivator, ServiceBasedControllerActivator>());
 
             services.AddMvc();
-
+            services.AddAutoMapper();
             return RegisterAutofac(services);
         }
 

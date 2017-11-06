@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using NetCoreIBLL;
 using NetCoreModel;
 using Microsoft.AspNetCore.Cors;
+using AutoMapper;
+using NetCoreWebApi.Models;
 
 namespace NetCoreWebApi.Controllers
 {
@@ -14,8 +16,11 @@ namespace NetCoreWebApi.Controllers
     public class ValuesController : Controller
     {
         private readonly ITestBLL _testBLL;
-        public ValuesController(ITestBLL testBLL)
+
+        private readonly IMapper _mapper;
+        public ValuesController(IMapper mapper,ITestBLL testBLL)
         {
+            _mapper = mapper;
             _testBLL = testBLL;
         }
 
@@ -26,11 +31,13 @@ namespace NetCoreWebApi.Controllers
         }
 
         [HttpPost("PostApiTest")]
-        public IActionResult PostApiTest([FromBody] TestModel model)
+        public IActionResult PostApiTest([FromBody] TestViewModel model)
         {
-            if(model==null || string.IsNullOrWhiteSpace(model.Name))
+            var model1 = _mapper.Map<TestViewModel,TestModel>(model);
+
+            if (model1 == null || string.IsNullOrWhiteSpace(model1.Name))
                 return Json(new ResultApiModel (){ IsSuccess = false, Message = "失败 model is null or model.Name is empty" });
-            return Json(new ResultApiModel() { IsSuccess = true, Message = "成功" + model.Name });
+            return Json(new ResultApiModel() { IsSuccess = true, Message = "成功" + model1.Name });
         }
 
         // GET api/values

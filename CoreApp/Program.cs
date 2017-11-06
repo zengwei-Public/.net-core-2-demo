@@ -12,9 +12,9 @@ namespace CoreApp
         {
             //GetType().GetTypeInfo().Assembly
             var builder = new ContainerBuilder();
-            var an = new AssemblyName("NetCoreBLL, Version=1.0.0.0, Culture=neutral, " +
-                        "PublicKeyToken=b03f5f7f11d50a3a, processor architecture=MSIL");
-            builder.RegisterAssemblyTypes(Assembly.Load(an)).Where(t => t.Name.EndsWith("BLL")).AsImplementedInterfaces();
+            //var an = new AssemblyName("NetCoreBLL, Version=1.0.0.0, Culture=neutral, " +
+            //            "PublicKeyToken=b03f5f7f11d50a3a, processor architecture=MSIL");
+            builder.RegisterAssemblyTypes(Assembly.Load("NetCoreBLL")).Where(t => t.Name.EndsWith("BLL")).AsImplementedInterfaces();
 
             var container = builder.Build();
 
