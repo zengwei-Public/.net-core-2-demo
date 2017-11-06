@@ -13,12 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreWebUI", "NetCoreWebU
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreWebApi", "NetCoreWebApi\NetCoreWebApi.csproj", "{5A653240-49B2-48F3-9FCA-C451760B8531}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreModel", "NetCoreModel\NetCoreModel.csproj", "{666754EA-E1CE-4B27-95C5-CD6E062D809B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCoreModel", "NetCoreModel\NetCoreModel.csproj", "{666754EA-E1CE-4B27-95C5-CD6E062D809B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreUtil", "NetCoreUtil\NetCoreUtil.csproj", "{F1A64ABD-148C-4022-AE39-2ABE7D510790}"
 EndProject
 Global
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -48,11 +47,18 @@ Global
 		{666754EA-E1CE-4B27-95C5-CD6E062D809B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{666754EA-E1CE-4B27-95C5-CD6E062D809B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{666754EA-E1CE-4B27-95C5-CD6E062D809B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1A64ABD-148C-4022-AE39-2ABE7D510790}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1A64ABD-148C-4022-AE39-2ABE7D510790}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1A64ABD-148C-4022-AE39-2ABE7D510790}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1A64ABD-148C-4022-AE39-2ABE7D510790}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DF03BF2D-AC8E-4EB3-8727-0199F832FAF0}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

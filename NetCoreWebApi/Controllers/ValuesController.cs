@@ -8,26 +8,41 @@ using NetCoreModel;
 using Microsoft.AspNetCore.Cors;
 using AutoMapper;
 using NetCoreWebApi.Models;
+using log4net;
+using Microsoft.Extensions.Options;
+using NetCoreModel.Base;
 
 namespace NetCoreWebApi.Controllers
 {
     [Route("api/[controller]")]
     [EnableCors("AllowSameDomain")]
-    public class ValuesController : Controller
+    public class ValuesController : BaseController
     {
+        ILog logger = LogManager.GetLogger(Startup.logRepository.Name, typeof(ValuesController).Name+"_Log");
+        ILog loggerMail = LogManager.GetLogger(Startup.logRepository.Name, typeof(ValuesController).Name+"_EMail");//core 暂不支持smtp协议
+
         private readonly ITestBLL _testBLL;
 
         private readonly IMapper _mapper;
-        public ValuesController(IMapper mapper,ITestBLL testBLL)
+        private readonly IOptions<AppSettingsModel> _appSettings;
+        private readonly IOptions<ConnectionsModel> _connSettings;
+        public ValuesController(IOptions<AppSettingsModel> appSettings, IOptions<ConnectionsModel> connSettings,IMapper mapper,ITestBLL testBLL)
         {
             _mapper = mapper;
             _testBLL = testBLL;
+            _appSettings = appSettings;
+            _connSettings = connSettings;
         }
 
         [HttpGet("GetApiTest")]
         public string GetApiTest()
         {
-            return _testBLL.TestMethod();
+           
+            logger.Info("请求了GetApiTest info");
+            logger.Error("请求了GetApiTest Error");
+            logger.Debug("请求了GetApiTest Debug");
+            loggerMail.Info("请求了GetApiTest info");
+            return _testBLL.TestMethod() + "：配置：LoopTime：" + _appSettings.Value.LoopTime;
         }
 
         [HttpPost("PostApiTest")]

@@ -12,12 +12,21 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using System.Reflection;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using log4net.Repository;
+using log4net;
+using log4net.Config;
+using NetCoreWebApi.Models;
+using NetCoreModel.Base;
 
 namespace NetCoreWebApi
 {
     public class Startup
     {
         public IContainer ApplicationContainer { get; private set; }
+
+        public IConfiguration Configuration { get; }
+
+        public static ILoggerRepository logRepository { get; set; }
 
         private IServiceProvider RegisterAutofac(IServiceCollection services)
         {
@@ -57,9 +66,10 @@ namespace NetCoreWebApi
                 builder.AddApplicationInsightsSettings(developerMode: true);
             }
             Configuration = builder.Build();
-        }
 
-        public IConfiguration Configuration { get; }
+            logRepository = LogManager.CreateRepository("NETCoreRepository");
+            XmlConfigurator.ConfigureAndWatch(logRepository,new System.IO.FileInfo("Config/log4net.config"));
+        }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -75,6 +85,10 @@ namespace NetCoreWebApi
 
             services.AddMvc();
             services.AddAutoMapper();
+
+            services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
+            services.Configure<ConnectionsModel>(Configuration.GetSection("ConnectionString"));
+
             return RegisterAutofac(services);
         }
 
@@ -87,7 +101,7 @@ namespace NetCoreWebApi
             }
 
             app.UseMvc();
-            app.UseCors("AllowSameDomain");
+            app.UseCors("AllowSameDomain");//允许跨域
         }
     }
 }
