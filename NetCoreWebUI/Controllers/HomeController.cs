@@ -20,9 +20,10 @@ namespace NetCoreWebUI.Controllers
 
         public IActionResult Index()
         {
-            var s = _testBLL.TestWcf();
+            //var s = _testBLL.TestWcf();
 
-            return View(s);
+            //return View(s);
+            return View();
         }
 
         public IActionResult About()

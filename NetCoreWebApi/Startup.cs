@@ -17,6 +17,8 @@ using log4net;
 using log4net.Config;
 using NetCoreWebApi.Models;
 using NetCoreModel.Base;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Mvc;
 
 namespace NetCoreWebApi
 {
@@ -52,7 +54,7 @@ namespace NetCoreWebApi
             return new AutofacServiceProvider(this.ApplicationContainer);
         }
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IWebHostEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -63,7 +65,7 @@ namespace NetCoreWebApi
             if (env.IsDevelopment())
             {
                 // This will push telemetry data through Application Insights pipeline faster, allowing you to view results immediately.
-                builder.AddApplicationInsightsSettings(developerMode: true);
+                //builder.AddApplicationInsightsSettings(developerMode: true);
             }
             Configuration = builder.Build();
 
@@ -76,14 +78,16 @@ namespace NetCoreWebApi
         {
             #region 跨域
             services.AddCors(options => options.AddPolicy("AllowSameDomain",
-        p => p.WithOrigins("http://localhost:33716", "http://c.example.com").AllowAnyMethod().AllowAnyHeader()));
+                p => p.WithOrigins("http://localhost:33716", "http://c.example.com").AllowAnyMethod().AllowAnyHeader()));
+            //services.Configure<MvcOptions>(option=>option.Filters.Add(new CorsAuthorizationFilterFactory("AllowSameDomain")));
             #endregion
 
             // Add framework services.
-            services.AddApplicationInsightsTelemetry(Configuration);
+            //services.AddApplicationInsightsTelemetry(Configuration);
             services.Replace(ServiceDescriptor.Transient<IControllerActivator, ServiceBasedControllerActivator>());
 
-            services.AddMvc();
+            //services.AddMvc();
+            services.AddControllers();
             services.AddAutoMapper();
 
             services.Configure<AppSettingsModel>(Configuration.GetSection("AppSettings"));
@@ -93,15 +97,20 @@ namespace NetCoreWebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseMvc();
             app.UseCors("AllowSameDomain");//允许跨域
+            //app.UseMvc();
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints=> {
+                endpoints.MapControllers();
+            });
+            
         }
     }
 }

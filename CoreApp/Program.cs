@@ -18,8 +18,8 @@ namespace CoreApp
 
             var container = builder.Build();
 
-            ITestBLL bll = new TestBLL();
-            Console.WriteLine(bll.TestMethod());
+            //ITestBLL bll = new TestBLL();
+            //Console.WriteLine(bll.TestMethod());
             Console.WriteLine("Hello World!");
         }
     }

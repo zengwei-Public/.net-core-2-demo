@@ -18,6 +18,7 @@ namespace NetCoreWebUI
 
             var host = new WebHostBuilder()
                 .UseKestrel()
+                .UseIIS()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
